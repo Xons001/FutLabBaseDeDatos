@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+<% include ../partials/nav.ejs %>
+
+<div class="container">
+<h2>Datos del usuario logueado</h2>
+
+<ul>
+    <% results.forEach(function(r) { %>
+        <li><%= r.cliente_id %> - <%= r.nombre %> - <%= r.apellidos %> - <%= r.mail %> - <%= r.password %> </li>
+    <% }); %>
+</ul>
+
+
+</div>
+
+</body>
+</html>
