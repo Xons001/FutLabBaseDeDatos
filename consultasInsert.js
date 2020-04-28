@@ -16,7 +16,7 @@ app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
-.get('/db', async (req, res) => {
+app.get('/clientes', async (req, res) => {
     try {
       const client = await pool.connect()
       const result = await client.query('SELECT * FROM cliente');
