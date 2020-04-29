@@ -38,8 +38,7 @@ app.get('/login/:mail/:password', async (req, res) => {
         const client = await pool.connect();
         var mail = req.params.mail;
         var password = req.params.password;
-        console.log(mail);
-        console.log(password);
+
         const result = await client.query("SELECT * FROM cliente where mail = '" + mail + "' AND password = '" + password + "'");
         const results = { 'results': (result) ? result.rows : null};
         
