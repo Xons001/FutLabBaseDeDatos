@@ -33,7 +33,7 @@ app.get('/clientes', async (req, res) => {
     }
 });
 
-app.get('/login/:mail/:password', async (req, res) => {
+/*app.get('/login/:mail/:password', async (req, res) => {
     try {
         const client = await pool.connect();
         var mail = req.params.mail;
@@ -52,7 +52,7 @@ app.get('/login/:mail/:password', async (req, res) => {
         console.error(err);
         res.send("Entro en el catch => " + err);
     }
-});
+});*/
 
 app.listen(PORT, function () {
   console.log('Example app listening on port 5000!');
