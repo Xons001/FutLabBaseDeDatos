@@ -65,9 +65,9 @@ app.post('/registrar', async (req, res) => {
         var password = data.password || "";
 
         const result = await client.query("INSERT INTO cliente (nombre, apellidos, mail, password) values ('" + nombre + "', '" + apellidos + "', '" + email + "', '" + password +"')");
-        //const userId = result.rows[0].maxid;          
+        const userId = result.rows[0].maxid;          
 
-        const results = { 'results': (result) ? result.rows : null};
+        const results = { 'results': (result2) ? result2.rows : null};
         var clientes = results['results'];
 
         var dataResponse = {
