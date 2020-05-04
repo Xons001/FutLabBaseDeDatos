@@ -54,6 +54,38 @@ app.get('/login/:mail/:password', async (req, res) => {
     }
 });
 
+app.post('/registrar', async (req, res) => {
+    try {
+        const client = await pool.connect()
+        var data =req.body;
+
+        var nombre = data.nombre || "";
+        var apellidos = data.apellidos || "";
+        var email = data.mail || "";
+        var password = data.password || "";
+
+        const result = await client.query("INSERT INTO cliente (nombre, apellidos, mail, password) values ('" + nombre + "', '" + apellidos + "', '" + email + "', '" + password +"')");
+        //const userId = result.rows[0].maxid;          
+
+        const results = { 'results': (result) ? result.rows : null};
+        var clientes = results['results'];
+
+        var dataResponse = {
+            codigo: 0,
+            texto: "",
+            userId: userId
+        };
+
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(dataResponse));
+        client.release();
+
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
+});
+
 app.listen(PORT, function () {
   console.log('Example app listening on port 5000!');
 });
