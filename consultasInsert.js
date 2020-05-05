@@ -54,7 +54,7 @@ app.get('/login/:mail/:password', async (req, res) => {
     }
 });
 
-app.post('/registrar', async (req, res) => {
+app.post('/registrar/:nombre/:apellidos/:mail/:password', async (req, res) => {
     try {
         const client = await pool.connect()
         var data =req.body;
@@ -65,7 +65,6 @@ app.post('/registrar', async (req, res) => {
         var password = data.password || "";
 
         const result = await client.query("INSERT INTO cliente (nombre, apellidos, mail, password) values ('" + nombre + "', '" + apellidos + "', '" + email + "', '" + password +"')");
-        const userId = result.rows[0].maxid;          
 
         const results = { 'results': (result2) ? result2.rows : null};
         var clientes = results['results'];
@@ -73,7 +72,6 @@ app.post('/registrar', async (req, res) => {
         var dataResponse = {
             codigo: 0,
             texto: "",
-            userId: userId
         };
 
         res.setHeader('Content-Type', 'application/json');
