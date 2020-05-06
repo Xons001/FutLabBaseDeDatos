@@ -59,10 +59,10 @@ app.post('/registrar/:nombre/:apellidos/:mail/:password', async (req, res) => {
         const client = await pool.connect()
         var data =req.body;
 
-        var nombre = data.nombre || "";
-        var apellidos = data.apellidos || "";
-        var email = data.mail || "";
-        var password = data.password || "";
+        var nombre = data.nombre;
+        var apellidos = data.apellidos;
+        var email = data.mail;
+        var password = data.password;
 
         const result = await client.query("INSERT INTO cliente (nombre, apellidos, mail, password) values ('" + nombre + "', '" + apellidos + "', '" + email + "', '" + password +"')");
 
