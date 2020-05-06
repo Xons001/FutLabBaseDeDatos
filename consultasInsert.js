@@ -33,6 +33,25 @@ app.get('/clientes', async (req, res) => {
     }
 });
 
+app.get('/cursos', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM cursos');
+        const results = { 'results': (result) ? result.rows : null};
+        
+        var cursos = results['results'];
+        
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ cursos }));
+        
+        client.release();
+    } catch (err) {
+        console.error(err);
+        res.send("Entro en el catch => " + err);
+    }
+});
+
+
 app.get('/login/:mail/:password', async (req, res) => {
     try {
         const client = await pool.connect();
