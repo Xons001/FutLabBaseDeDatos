@@ -73,7 +73,10 @@ app.get('/login/:mail/:password', async (req, res) => {
     }
 });
 
-app.post('/registrar/:nombre/:apellidos/:mail/:password', async (req, res) => {
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.post('/registrar', async (req, res) => {
     try {
         const client = await pool.connect()
         var data =req.body;
