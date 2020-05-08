@@ -1,6 +1,7 @@
 const express = require('express')
 const PORT = process.env.PORT || 5000
 const bodyParser = require('body-parser');
+const crypto = require('crypto');
 
 const { Pool } = require('pg');
 const pool = new Pool({
@@ -58,7 +59,9 @@ app.get('/login/:mail/:password', async (req, res) => {
         var mail = req.params.mail;
         var password = req.params.password;
 
-        const result = await client.query("SELECT * FROM cliente where mail = '" + mail + "' AND password = '" + password + "'");
+        var hash = crypto.createHmac('sha256', password).digest('hex');
+        
+        const result = await client.query("SELECT * FROM cliente where mail = '" + mail + "' AND password = '" + hash + "'");
         const results = { 'results': (result) ? result.rows : null};
         
         var clientes = results['results'];
@@ -86,7 +89,9 @@ app.post('/registrar', async (req, res) => {
         var email = data.mail;
         var password = data.password;
 
-        const result = await client.query("INSERT INTO cliente (nombre, apellidos, mail, password) values ('" + nombre + "', '" + apellidos + "', '" + email + "', '" + password +"')");
+        var hash = crypto.createHmac('sha256', password).digest('hex');
+        
+        const result = await client.query("INSERT INTO cliente (nombre, apellidos, mail, password) values ('" + nombre + "', '" + apellidos + "', '" + email + "', '" + hash +"')");
 
         const results = { 'results': (result) ? result.rows : null};
         var clientes = results['results'];
