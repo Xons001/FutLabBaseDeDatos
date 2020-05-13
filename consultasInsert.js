@@ -111,6 +111,35 @@ app.post('/registrar', async (req, res) => {
     }
 });
 
+app.post('/inscripcion', async (req, res) => {
+    try {
+        const client = await pool.connect()
+        var data =req.body;
+
+        var inscripcion_id = data.inscripcion_id;
+        var curso_id = data.curso_id;
+        var cliente_id = data.cliente_id;
+        
+        const result = await client.query("INSERT INTO inscripciones (inscripcion_id, curso_id, cliente_id) values ('" + inscripcion_id + "', '" + curso_id + "', '" + cliente_id +"')");
+
+        const results = { 'results': (result) ? result.rows : null};
+        var clientes = results['results'];
+
+        var dataResponse = {
+            codigo: 0,
+            texto: "",
+        };
+
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(dataResponse));
+        client.release();
+
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
+});
+
 app.listen(PORT, function () {
   console.log('Example app listening on port 5000!');
 });
