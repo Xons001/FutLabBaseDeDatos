@@ -52,6 +52,45 @@ app.get('/cursos', async (req, res) => {
     }
 });
 
+app.get('/cursos/grado/:grado_id', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        var grado_id = req.params.grado_id;
+        
+        const result = await client.query('SELECT * FROM grados where grado_id = ' + grado_id);
+        const results = { 'results': (result) ? result.rows : null};
+        
+        var grado = results['results'];
+        
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ grado }));
+        
+        client.release();
+    } catch (err) {
+        console.error(err);
+        res.send("Entro en el catch => " + err);
+    }
+});
+
+app.get('/cursos/master/:master_id', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        var master_id = req.params.master_id;
+        
+        const result = await client.query('SELECT * FROM masters where master_id = ' + master_id);
+        const results = { 'results': (result) ? result.rows : null};
+        
+        var master = results['results'];
+        
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ master }));
+        
+        client.release();
+    } catch (err) {
+        console.error(err);
+        res.send("Entro en el catch => " + err);
+    }
+});
 
 app.get('/login/:mail/:password', async (req, res) => {
     try {
