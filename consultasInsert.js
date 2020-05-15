@@ -155,11 +155,10 @@ app.post('/inscripcion', async (req, res) => {
         const client = await pool.connect()
         var data =req.body;
 
-        var inscripcion_id = data.inscripcion_id;
         var curso_id = data.curso_id;
         var cliente_id = data.cliente_id;
         
-        const result = await client.query("INSERT INTO inscripciones (curso_id, cliente_id) values ('" + curso_id + "', '" + cliente_id +"')");
+        const result = await client.query("INSERT INTO inscripciones (curso_id, cliente_id) values (" + curso_id + ", " + cliente_id +")");
 
         const results = { 'results': (result) ? result.rows : null};
         var clientes = results['results'];
