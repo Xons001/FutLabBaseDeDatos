@@ -159,7 +159,7 @@ app.post('/inscripcion', async (req, res) => {
         var curso_id = data.curso_id;
         var cliente_id = data.cliente_id;
         
-        const result = await client.query("INSERT INTO inscripciones (inscripcion_id, curso_id, cliente_id) values ('" + inscripcion_id + "', '" + curso_id + "', '" + cliente_id +"')");
+        const result = await client.query("INSERT INTO inscripciones (curso_id, cliente_id) values ('" + curso_id + "', '" + cliente_id +"')");
 
         const results = { 'results': (result) ? result.rows : null};
         var clientes = results['results'];
