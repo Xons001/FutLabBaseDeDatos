@@ -12,6 +12,10 @@ const pool = new Pool({
 
 var app = express();
 
+app.listen(PORT, function () {
+  console.log('Example app listening on port 5000!');
+});
+
 app.get('/', function (req, res) {
     res.send('Hello World! Prueba');
 });
@@ -181,7 +185,7 @@ app.post('/inscripcion', async (req, res) => {
     }
 });
 
-app.use(bodyParser.json())
+/* app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.put('/restarplazas/:curso_id', async (req, res) => {
@@ -210,8 +214,5 @@ app.put('/restarplazas/:curso_id', async (req, res) => {
         console.error(err);
         res.send("Error " + err);
     }
-});
+}); */
 
-app.listen(PORT, function () {
-  console.log('Example app listening on port 5000!');
-});
