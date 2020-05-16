@@ -127,10 +127,10 @@ app.get('/inscripcioncliente/:cliente_id', async (req, res) => {
         const result = await client.query("SELECT cu.* FROM cursos cu, inscripciones ins where ins.curso_id = cu.curso_id AND ins.cliente_id = " + cliente_id + ";");
         const results = { 'results': (result) ? result.rows : null};
         
-        var clientes = results['results'];
+        var cursos = results['results'];
         
         res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify({ clientes }));
+        res.end(JSON.stringify({ cursos }));
         
         client.release();
     } catch (err) {
