@@ -124,7 +124,7 @@ app.get('/inscripcioncliente/:cliente_id', async (req, res) => {
         const client = await pool.connect();
         var cliente_id = req.params.cliente_id;
         
-        const result = await client.query("SELECT cu.nombre FROM cursos cu, inscripciones ins where ins.curso_id = cu.curso_id AND ins.cliente_id = " + cliente_id + ";");
+        const result = await client.query("SELECT cu.* FROM cursos cu, inscripciones ins where ins.curso_id = cu.curso_id AND ins.cliente_id = " + cliente_id + ";");
         const results = { 'results': (result) ? result.rows : null};
         
         var clientes = results['results'];
