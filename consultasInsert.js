@@ -181,6 +181,37 @@ app.post('/inscripcion', async (req, res) => {
     }
 });
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.put('/restarplazas/:curso_id', async (req, res) => {
+    try {
+        const client = await pool.connect()
+
+        var curso_id = req.params.curso_id;
+        
+        var plazas = req.body.plazas;
+        
+        const result = await client.query("update cursos set plazas = " + (plazas - 1) + " where curso_id = " + curso_id + ";");
+
+        const results = { 'results': (result) ? result.rows : null};
+        var clientes = results['results'];
+
+        var dataResponse = {
+            codigo: 0,
+            texto: "",
+        };
+
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(dataResponse));
+        client.release();
+
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
+});
+
 app.listen(PORT, function () {
   console.log('Example app listening on port 5000!');
 });
