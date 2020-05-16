@@ -245,7 +245,7 @@ app.post('/inscripcion', async (req, res) => {
     }
 });
 
-/* app.use(bodyParser.json())
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.put('/restarplazas/:curso_id', async (req, res) => {
@@ -255,8 +255,10 @@ app.put('/restarplazas/:curso_id', async (req, res) => {
         var curso_id = req.params.curso_id;
         
         var plazas = req.body.plazas;
+
+        var resta = plazas - 1;
         
-        const result = await client.query("update cursos set plazas = " + (plazas - 1) + " where curso_id = " + curso_id + ";");
+        const result = await client.query("update cursos set plazas = " + resta + " where curso_id = " + curso_id + ";");
 
         const results = { 'results': (result) ? result.rows : null};
         var clientes = results['results'];
@@ -274,5 +276,5 @@ app.put('/restarplazas/:curso_id', async (req, res) => {
         console.error(err);
         res.send("Error " + err);
     }
-}); */
+});
 
