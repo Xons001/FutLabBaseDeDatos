@@ -225,15 +225,28 @@ app.post('/inscripcion', async (req, res) => {
         var curso_id = data.curso_id;
         var cliente_id = data.cliente_id;
         
-        const result = await client.query("INSERT INTO inscripciones (curso_id, cliente_id) values (" + curso_id + ", " + cliente_id + ");");
+        const consultaCompra = await client.query("SELECT * FROM inscripciones WHERE cliente_id =" + cliente_id + " AND curso_id = " + curso_id + ";");
+        console.log("Mostrar consulta: " + consultaCompra.rows.length);
+        
+        if (consultaCompra && consultaCompra.rows.length > 0) {
 
-        const results = { 'results': (result) ? result.rows : null};
-        var clientes = results['results'];
+            var dataResponse = {
+                codigo: 1,
+                texto: "No se ha podido comprar porque ya lo tiene comprado",
+            };
 
-        var dataResponse = {
-            codigo: 0,
-            texto: "",
-        };
+        } else {
+            
+            const result = await client.query("INSERT INTO inscripciones (curso_id, cliente_id) values (" + curso_id + ", " + cliente_id + ");");
+            const results = { 'results': (result) ? result.rows : null};
+            var clientes = results['results'];
+
+            var dataResponse = {
+                codigo: 0,
+                texto: "",
+            };
+            
+        }
 
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(dataResponse));
